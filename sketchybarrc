@@ -62,7 +62,7 @@ sketchybar --add item front_app left \
 # https://felixkratz.github.io/SketchyBar/config/events
 
 sketchybar --add item clock right \
-           --set clock update_freq=10 icon=  script="$PLUGIN_DIR/clock.sh" \
+           --set clock update_freq=1 icon=  script="$PLUGIN_DIR/clock.sh" width=200 align=left \
            --add item theme right \
            --set theme icon=󰔎 script="$PLUGIN_DIR/theme.sh" \
               background.color=0x77A5A1FF background.height=30 width=30 \
@@ -79,6 +79,7 @@ sketchybar --add item clock right \
            --subscribe battery system_woke power_source_change
 
 source "${CONFIG_DIR}/inits/aerospace.sh"
+source "${CONFIG_DIR}/inits/progress.sh"
 source "${CONFIG_DIR}/inits/cpu.sh"
 source "${CONFIG_DIR}/inits/network.sh"
 source "${CONFIG_DIR}/inits/memory.sh"

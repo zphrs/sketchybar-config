@@ -3,7 +3,7 @@ CURRENT=$(aerospace list-workspaces --focused)
 EXISTING=$(sketchybar --query bar | jq '.items | map(select(startswith("space."))) | map(.[6:]) | join("\n")' -r)
 AEROSPACES=$(aerospace list-workspaces --monitor all --empty no)
 AEROSPACES=$(echo "$AEROSPACES
-$FOCUSED_WORKSPACE" | sort -u | grep .)
+$FOCUSED_WORKSPACE" | LC_COLLATE=C sort -u | grep .)
 if [[ $EXISTING != $AEROSPACES ]]; then
     echo "HERE"
     echo "$EXISTING"
@@ -48,6 +48,11 @@ if [[ $EXISTING != $AEROSPACES ]]; then
             padding_right=5 \
             blur_radius=4 \
             y_offset=8
+
+    # Ensure progress bar stays to the right of spaces
+    sketchybar --move progress.filled after spaces \
+               --move progress.empty after progress.filled \
+               --move progress.label after progress.empty 2>/dev/null
 fi
 for space in $EXISTING; do
     sketchybar --set "space.$space" background.color=0x11A5A1FF
