@@ -9,7 +9,7 @@ sketchybar --add item progress.filled left \
                                  label.drawing=off \
                                  icon.drawing=off \
                                  background.height=26 \
-                                 background.corner_radius=4 \
+                                 background.corner_radius=0 \
            --add item progress.empty left \
            --set progress.empty background.color=0x44ffffff \
                                 background.drawing=on \
@@ -17,7 +17,7 @@ sketchybar --add item progress.filled left \
                                 label.drawing=off \
                                 icon.drawing=off \
                                 background.height=26 \
-                                background.corner_radius=4 \
+                                background.corner_radius=0 \
            --add bracket progress_bar progress.filled progress.empty \
            --set progress_bar background.border_color=$WHITE \
                               background.border_width=0 \

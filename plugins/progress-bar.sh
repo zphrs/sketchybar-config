@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+source "$HOME/.config/sketchybar/colors.sh"
+
 # Target date: 2025-12-11 23:59
 TARGET_YEAR=2025
 TARGET_MONTH=12
@@ -33,7 +35,7 @@ fi
 
 # Exponential progress calculation (Fast start, slow end)
 # k determines the steepness.
-K=5
+K=10
 PERCENT=$(awk -v elapsed="$ELAPSED_SECONDS" -v total="$TOTAL_SECONDS" -v k="$K" 'BEGIN {
   if (total <= 0) { print 100; exit }
   ratio = elapsed / total
@@ -58,8 +60,16 @@ BAR_WIDTH=150
 FILLED_WIDTH=$((PERCENT * BAR_WIDTH / 100))
 EMPTY_WIDTH=$((BAR_WIDTH - FILLED_WIDTH))
 
+if [ $PERCENT -lt 33 ]; then
+    COLOR=$GREEN
+elif [ $PERCENT -lt 66 ]; then
+    COLOR=$YELLOW
+else
+    COLOR=$RED
+fi
+
 LABEL="${DAYS}d ${HOURS}h ${MINUTES}m"
 
-sketchybar --set progress.filled width=$FILLED_WIDTH \
+sketchybar --set progress.filled width=$FILLED_WIDTH background.color=$COLOR \
            --set progress.empty width=$EMPTY_WIDTH \
            --set progress.label label="$LABEL" icon="⏳"
