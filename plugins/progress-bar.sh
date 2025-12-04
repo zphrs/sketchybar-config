@@ -35,7 +35,7 @@ fi
 
 # Exponential progress calculation (Fast start, slow end)
 # k determines the steepness.
-K=10
+K=1.5
 PERCENT=$(awk -v elapsed="$ELAPSED_SECONDS" -v total="$TOTAL_SECONDS" -v k="$K" 'BEGIN {
   if (total <= 0) { print 100; exit }
   ratio = elapsed / total
