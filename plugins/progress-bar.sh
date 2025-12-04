@@ -21,29 +21,8 @@ TARGET_EPOCH=$(date -j -f "%Y-%m-%d %H:%M:%S" "$TARGET_YEAR-$TARGET_MONTH-$TARGE
 START_EPOCH=$(date -j -f "%Y-%m-%d %H:%M:%S" "$START_YEAR-$START_MONTH-$START_DAY $START_HOUR:$START_MINUTE:00" +%s)
 CURRENT_EPOCH=$(date +%s)
 
-# Calculate progress
-TOTAL_SECONDS=$((TARGET_EPOCH - START_EPOCH))
-ELAPSED_SECONDS=$((CURRENT_EPOCH - START_EPOCH))
-
-if [ $ELAPSED_SECONDS -lt 0 ]; then
-  ELAPSED_SECONDS=0
-fi
-
-if [ $ELAPSED_SECONDS -gt $TOTAL_SECONDS ]; then
-  ELAPSED_SECONDS=$TOTAL_SECONDS
-fi
-
-# Exponential progress calculation (Fast start, slow end)
-# k determines the steepness.
-K=1.5
-PERCENT=$(awk -v elapsed="$ELAPSED_SECONDS" -v total="$TOTAL_SECONDS" -v k="$K" 'BEGIN {
-  if (total <= 0) { print 100; exit }
-  ratio = elapsed / total
-  if (ratio < 0) ratio = 0
-  if (ratio > 1) ratio = 1
-  p = (1 - exp(-k * ratio)) / (1 - exp(-k))
-  printf "%.0f", p * 100
-}')
+# Calculate progress with active hours (09:00 - 22:00)
+PERCENT=$(python3 "$CONFIG_DIR/plugins/progress_calc.py" "$START_EPOCH" "$TARGET_EPOCH" "$CURRENT_EPOCH")
 
 # Calculate time remaining for label
 REMAINING_SECONDS=$((TARGET_EPOCH - CURRENT_EPOCH))
