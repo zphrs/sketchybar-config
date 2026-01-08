@@ -23,9 +23,9 @@ def get_active_duration(t1: float, t2: float) -> float:
     curr_day: datetime = start_dt.replace(hour=0, minute=0, second=0, microsecond=0)
 
     while curr_day < end_dt + timedelta(days=1):
-        # Skip saturdays
-        saturday = 5
-        if curr_day.weekday() != saturday:
+        # Skip sundays
+        sunday = 6
+        if curr_day.weekday() != sunday:
             active_start: datetime = curr_day.replace(hour=9, minute=30, second=0)
             # gives 3 hours of buffer for commuting & dinner
             active_end: datetime = curr_day.replace(hour=22, minute=0, second=0)
