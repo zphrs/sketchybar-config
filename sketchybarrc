@@ -79,7 +79,7 @@ sketchybar --add item clock right \
            --subscribe battery system_woke power_source_change
 
 source "${CONFIG_DIR}/inits/progress.sh"
-source "${CONFIG_DIR}/inits/aerospace.sh"
+# source "${CONFIG_DIR}/inits/aerospace.sh"
 source "${CONFIG_DIR}/inits/cpu.sh"
 source "${CONFIG_DIR}/inits/network.sh"
 source "${CONFIG_DIR}/inits/memory.sh"
