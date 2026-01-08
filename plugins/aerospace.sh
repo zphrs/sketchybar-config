@@ -21,10 +21,10 @@ if [[ $EXISTING != $AEROSPACES ]]; then
             CMD="${CMD} --add item space.$sid left \
                 --subscribe space.$sid aerospace_workspace_change \
                 --set space.$sid \
-                background.color=0x11A5A1FF \
+                background.color=0x33A5A1FF \
                 label.color=$TXT_COLOR \
                 background.height=30 \
-                background.border_color=0x22A5A1FF \
+                background.border_color=0x44A5A1FF \
                 background.border_width=1 \
                 background.corner_radius=4 \
                 background.drawing=on \
@@ -40,7 +40,7 @@ if [[ $EXISTING != $AEROSPACES ]]; then
     eval "$CMD"
     sketchybar --add bracket spaces $(echo "$AEROSPACES" | jq -Rn '[inputs] | map(select(length > 0)) | map("space." + .) | join(" ")' -r) \
         --set spaces background.color=0x22777771 \
-            background.border_color=0x11777771 \
+            background.border_color=0x44777771 \
             background.border_width=1 \
             background.corner_radius=8 \
             background.height=56 \
@@ -48,15 +48,11 @@ if [[ $EXISTING != $AEROSPACES ]]; then
             padding_right=5 \
             blur_radius=4 \
             y_offset=8
-
-    # Ensure progress bar stays to the right of spaces
-    sketchybar --move progress.filled after spaces \
-               --move progress.empty after progress.filled \
-               --move progress.label after progress.empty 2>/dev/null
+    
 fi
 for space in $EXISTING; do
-    sketchybar --set "space.$space" background.color=0x11A5A1FF
+    sketchybar --set "space.$space" background.color=0x33A5A1FF
 done
 
 
-sketchybar --set "space.$CURRENT" background.color=0x77A5A1FF
+sketchybar --set "space.$CURRENT" background.color=0xa0A5A1FF

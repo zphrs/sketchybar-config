@@ -46,9 +46,9 @@ sketchybar --default "${default[@]}"
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
 
-sketchybar --add item front_app left \
-           --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" width=95 align=center \
-           --subscribe front_app front_app_switched
+# JUST FOR PADDING
+sketchybar --add item padding left \
+           --set padding icon.drawing=off width=8
 
 ##### Adding Right Items #####
 # In the same way as the left items we can add items to the right side.
@@ -78,8 +78,8 @@ sketchybar --add item clock right \
            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke power_source_change
 
-source "${CONFIG_DIR}/inits/aerospace.sh"
 source "${CONFIG_DIR}/inits/progress.sh"
+source "${CONFIG_DIR}/inits/aerospace.sh"
 source "${CONFIG_DIR}/inits/cpu.sh"
 source "${CONFIG_DIR}/inits/network.sh"
 source "${CONFIG_DIR}/inits/memory.sh"

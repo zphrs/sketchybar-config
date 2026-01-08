@@ -23,14 +23,18 @@ def get_active_duration(t1: float, t2: float) -> float:
     curr_day: datetime = start_dt.replace(hour=0, minute=0, second=0, microsecond=0)
 
     while curr_day < end_dt + timedelta(days=1):
-        active_start: datetime = curr_day.replace(hour=9, minute=0, second=0)
-        active_end: datetime = curr_day.replace(hour=22, minute=0, second=0)
+        # Skip saturdays
+        saturday = 5
+        if curr_day.weekday() != saturday:
+            active_start: datetime = curr_day.replace(hour=8, minute=30, second=0)
+            # gives 3 hours of buffer for commuting & dinner
+            active_end: datetime = curr_day.replace(hour=22, minute=0, second=0)
 
-        s: datetime = max(start_dt, active_start)
-        e: datetime = min(end_dt, active_end)
+            s: datetime = max(start_dt, active_start)
+            e: datetime = min(end_dt, active_end)
 
-        if s < e:
-            duration += (e - s).total_seconds()
+            if s < e:
+                duration += (e - s).total_seconds()
 
         curr_day += timedelta(days=1)
 
@@ -49,10 +53,11 @@ if total_active <= 0:
     percent: float = 100.0
 else:
     ratio: float = elapsed_active / total_active
-    k: float = 1.25
-    try:
-        percent = (1 - math.exp(-k * ratio)) / (1 - math.exp(-k)) * 100
-    except Exception:
-        percent = 0.0
+    # k: float = 1
+    # try:
+    #     percent = (1 - math.exp(-k * ratio)) / (1 - math.exp(-k)) * 100
+    # except Exception:
+    #     percent = 0.0
+    percent = ratio * 100
 
-print(f"{int(percent)}")
+print(f"{int(total_active)} {int(elapsed_active)} {int(percent * 10)}")
